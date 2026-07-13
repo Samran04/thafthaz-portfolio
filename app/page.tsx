@@ -3,14 +3,19 @@ import Link from 'next/link';
 import { ArrowRight, Instagram, Mail, Linkedin } from 'lucide-react';
 import { projects } from '@/app/data/projects';
 
+// Show only a few featured items on the home screen.
+// This keeps the initial experience focused and cinematic.
 const featuredWork = projects.slice(0, 3);
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-transparent">
+      {/* Hero section: first impression, full viewport height */}
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 py-10 sm:px-8 lg:px-12">
+        {/* Background glow adds premium depth without overwhelming the design */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(57,255,20,0.08),transparent_45%)]" />
         <div className="relative z-10 flex w-full max-w-6xl flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+          {/* Text column with title, role, and CTA */}
           <div className="max-w-2xl space-y-6">
             <p className="text-sm uppercase tracking-[0.35em] text-[#B8C2CC]">Video Editor • Graphic Designer</p>
             <h1 className="font-display text-5xl font-semibold leading-[0.9] text-white sm:text-6xl lg:text-8xl">
@@ -29,6 +34,7 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Profile card for a premium visual presence */}
           <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-[2rem] border border-white/10 bg-[#181818]/70 p-3 shadow-2xl shadow-black/40 backdrop-blur-xl lg:mx-0">
             <div className="overflow-hidden rounded-[1.5rem]">
               <Image
@@ -44,6 +50,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Featured work preview section */}
       <section id="work" className="px-5 py-16 sm:px-8 lg:px-12">
         <div className="mx-auto flex max-w-6xl flex-col gap-8">
           <div className="flex items-end justify-between">
@@ -82,6 +89,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* About / contact teaser section */}
       <section className="px-5 py-16 sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-6xl gap-8 rounded-[2rem] border border-white/10 bg-[#181818]/70 p-8 backdrop-blur xl:grid-cols-[1.1fr_0.9fr] xl:p-12">
           <div className="space-y-5">

@@ -3,8 +3,10 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
 
+// SmoothScroll is a client component because it uses browser APIs.
 export function SmoothScroll() {
   useEffect(() => {
+    // Lenis creates a smooth scrolling experience that feels more app-like.
     const lenis = new Lenis({
       duration: 1.2,
       smoothWheel: true,
@@ -12,6 +14,8 @@ export function SmoothScroll() {
     });
 
     let frame = 0;
+
+    // requestAnimationFrame is required for Lenis to update on every frame.
     const raf = (time: number) => {
       lenis.raf(time);
       frame = requestAnimationFrame(raf);
@@ -25,5 +29,6 @@ export function SmoothScroll() {
     };
   }, []);
 
+  // This component does not render visible UI.
   return null;
 }

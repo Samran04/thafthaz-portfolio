@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { projects } from '@/app/data/projects';
 
+// WorkPage displays the archive of selected projects.
+// It uses client-side navigation to each individual project page.
 export default function WorkPage() {
   return (
     <main className="min-h-screen px-5 py-24 sm:px-8 lg:px-12">

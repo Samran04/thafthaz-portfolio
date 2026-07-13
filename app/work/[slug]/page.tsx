@@ -4,10 +4,12 @@ import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { projects } from '@/app/data/projects';
 
+// generateStaticParams tells Next.js which dynamic pages to pre-render.
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
+// generateMetadata creates page metadata for each project page.
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = projects.find((item) => item.slug === slug);
@@ -24,6 +26,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
+// ProjectPage is a server component by default in App Router.
+// It renders a focused detail view for each selected project.
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = projects.find((item) => item.slug === slug);

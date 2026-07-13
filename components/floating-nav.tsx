@@ -9,6 +9,8 @@ const navItems = [
   { href: '/work', label: 'Work' },
 ];
 
+// FloatingNav shows a minimal navigation bar that hides when scrolling down.
+// The nav appears again when the user scrolls up.
 export function FloatingNav() {
   const [visible, setVisible] = useState(true);
 
