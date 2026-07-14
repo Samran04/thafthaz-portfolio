@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 
 interface ExhibitionMediaProps {
   imageSrc: string;
@@ -10,9 +9,10 @@ interface ExhibitionMediaProps {
 }
 
 /**
- * ExhibitionMedia handles video autoplay, loop, mute and viewport-based pausing.
- * It uses IntersectionObserver to detect when the media is at least 50% visible,
- * automatically playing the video and fading it in over the static image placeholder.
+ * ExhibitionMedia renders a visual asset using native img/video tags.
+ * This preserves original artwork aspect ratios exactly (no object-cover cropping)
+ * and allows rounded borders/shadows to wrap the actual visual bounds dynamically.
+ * It uses IntersectionObserver to play/pause videos when they are 35% visible.
  */
 export function ExhibitionMedia({ imageSrc, videoSrc, alt }: ExhibitionMediaProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -30,24 +30,19 @@ export function ExhibitionMedia({ imageSrc, videoSrc, alt }: ExhibitionMediaProp
           if (!video) return;
 
           if (entry.isIntersecting) {
-            // Autoplay the video when it comes into viewport
             video.play()
-              .then(() => {
-                setIsPlaying(true);
-              })
-              .catch((err) => {
-                // Handle autoplay block or interruption gracefully
-                console.debug('Autoplay video playing state:', err);
+              .then(() => setIsPlaying(true))
+              .catch(() => {
+                // Gracefully catch autoplay blockages
               });
           } else {
-            // Pause video to conserve CPU and memory
             video.pause();
             setIsPlaying(false);
           }
         });
       },
       {
-        threshold: 0.3, // Trigger when 30% of the element is visible
+        threshold: 0.35, // Trigger playback when 35% of the element is visible
       }
     );
 
@@ -64,22 +59,20 @@ export function ExhibitionMedia({ imageSrc, videoSrc, alt }: ExhibitionMediaProp
   }, [videoSrc]);
 
   return (
-    <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-black/20">
-      {/* Main Image Asset - acts as placeholder/poster and fallback */}
-      <Image
+    <div ref={containerRef} className="relative flex items-center justify-center w-full h-full max-h-[72vh] md:max-h-[76vh]">
+      {/* Fallback & Poster Image */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={imageSrc}
         alt={alt}
-        fill
-        sizes="(max-width: 768px) 100vw, 80vw"
-        priority
-        className={`object-cover transition-all duration-[700ms] ease-in-out ${
+        className={`max-h-full max-w-full w-auto h-auto object-contain rounded-[1.5rem] border border-white/10 shadow-2xl transition-all duration-[600ms] ease-out ${
           videoSrc && isPlaying && isLoaded
-            ? 'scale-105 opacity-0 blur-md'
+            ? 'scale-[0.98] opacity-0 blur-md'
             : 'scale-100 opacity-100 blur-0'
         }`}
       />
 
-      {/* Autoplay Video Asset */}
+      {/* Autoplay Video overlay */}
       {videoSrc && (
         <video
           ref={videoRef}
@@ -89,8 +82,8 @@ export function ExhibitionMedia({ imageSrc, videoSrc, alt }: ExhibitionMediaProp
           playsInline
           preload="metadata"
           onLoadedData={() => setIsLoaded(true)}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[600ms] ease-in-out ${
-            isPlaying && isLoaded ? 'opacity-100' : 'opacity-0'
+          className={`absolute max-h-full max-w-full w-auto h-auto object-contain rounded-[1.5rem] border border-white/10 shadow-2xl transition-opacity duration-[500ms] ease-out ${
+            isPlaying && isLoaded ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
         />
       )}
