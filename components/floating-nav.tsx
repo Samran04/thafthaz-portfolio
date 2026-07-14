@@ -36,13 +36,13 @@ export function FloatingNav() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -20, opacity: 0 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
-          className="fixed left-1/2 top-4 z-50 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-[#071A1F]/70 px-3 py-2 shadow-lg shadow-black/30 backdrop-blur-xl"
+          className="fixed left-1/2 top-4 z-50 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-[#0b1417]/85 px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-xl"
         >
-          <Link href="/" className="rounded-full px-3 py-2 text-sm font-medium text-white transition hover:bg-white/10">
+          <Link href="/" className="rounded-full px-3.5 py-1.5 text-xs uppercase tracking-[0.25em] font-semibold text-white transition hover:bg-white/5">
             Thafthaz
           </Link>
           {navItems.slice(1).map((item) => (
-            <Link key={item.href} href={item.href} className="rounded-full px-3 py-2 text-sm text-[#B8C2CC] transition hover:bg-white/10 hover:text-white">
+            <Link key={item.href} href={item.href} className="rounded-full px-3.5 py-1.5 text-xs uppercase tracking-[0.25em] text-[#8ea1a7] transition hover:bg-white/5 hover:text-white">
               {item.label}
             </Link>
           ))}
