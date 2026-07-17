@@ -97,8 +97,7 @@ export default function HomePage() {
               <div className="relative h-full w-full overflow-hidden rounded-[1.4rem] bg-[#071114]">
                 <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),transparent_35%,rgba(3,13,16,0.18)_100%)] pointer-events-none" />
                 <Image
-                  src="/assets/profile/profile.jpeg
-                  "
+                  src="/assets/profile/profile.jpeg"
                   alt="Portrait of Thafthaz"
                   fill
                   sizes="(max-width: 768px) 280px, 360px"
