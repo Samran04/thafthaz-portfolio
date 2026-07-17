@@ -69,7 +69,7 @@ export default function HomePage() {
           </motion.div>
 
           {/* Profile Card with floating oscillation and ambient backing glow */}
-          <div className="relative justify-self-center lg:justify-self-end w-full max-w-[250px] sm:max-w-[310px]">
+          <div className="relative justify-self-center lg:justify-self-end w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px]">
             {/* Soft backing cyan glow */}
             <div className="absolute -inset-4 bg-[radial-gradient(circle_at_center,rgba(57,255,20,0.08),transparent_55%)] blur-2xl pointer-events-none rounded-[3rem]" />
             
@@ -92,15 +92,18 @@ export default function HomePage() {
                   delay: 0.8
                 }
               }}
-              className="relative w-full aspect-[3/4] overflow-hidden rounded-[2rem] border border-[#39FF14]/15 bg-[#0b1417] p-2 shadow-2xl shadow-black/80 backdrop-blur-xl"
+              className="relative w-full aspect-[3/4] overflow-hidden rounded-[2rem] border border-[#39FF14]/15 bg-[#0b1417] p-1.5 shadow-2xl shadow-black/80 backdrop-blur-xl sm:p-2"
             >
-              <div className="w-full h-full relative overflow-hidden rounded-[1.5rem]">
+              <div className="relative h-full w-full overflow-hidden rounded-[1.4rem] bg-[#071114]">
+                <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),transparent_35%,rgba(3,13,16,0.18)_100%)] pointer-events-none" />
                 <Image
-                  src="/assets/profile/profile.jpg"
+                  src="/assets/profile/profile.jpeg
+                  "
                   alt="Portrait of Thafthaz"
                   fill
-                  sizes="(max-width: 768px) 250px, 310px"
-                  className="object-cover"
+                  sizes="(max-width: 768px) 280px, 360px"
+                  className="scale-[1.04] object-cover object-[center_18%] brightness-[1.04] contrast-[1.08] saturate-[1.05]"
+                  style={{ objectPosition: 'center 18%' }}
                   priority
                 />
               </div>
@@ -136,7 +139,6 @@ export default function HomePage() {
           >
             <ExhibitionMedia
               imageSrc={project.image}
-              videoSrc={project.video}
               alt={project.title}
             />
           </motion.div>
