@@ -78,3 +78,26 @@ body {
   box-sizing: border-box;
 }
 
+
+/* Keep the reels-style snap effect on phones, but let the content-rich opening
+   scene grow beyond a short viewport instead of compressing the portrait. */
+@media (max-width: 767px) {
+  .snap-container {
+    height: 100svh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+  }
+
+  .snap-section {
+    height: 100svh;
+    min-height: 100svh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .snap-section:first-child {
+    height: auto;
+    min-height: 42rem;
+  }
+}

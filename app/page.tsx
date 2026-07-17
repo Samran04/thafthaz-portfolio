@@ -101,8 +101,7 @@ export default function HomePage() {
                   alt="Portrait of Thafthaz"
                   fill
                   sizes="(max-width: 768px) 280px, 360px"
-                  className="scale-[1.04] object-cover object-[center_18%] brightness-[1.04] contrast-[1.08] saturate-[1.05]"
-                  style={{ objectPosition: 'center 18%' }}
+                  className="scale-[1.10] object-cover object-[center_44%] brightness-[1.04] contrast-[1.08] saturate-[1.05] sm:scale-[1.04] sm:object-[center_18%]"
                   priority
                 />
               </div>
