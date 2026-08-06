@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  /* Deep cyan background, extremely premium dark theme base */
+  --background: #030d10;
+  /* Charcoal surfaces with subtle cyan tint */
+  --card: #0b1417;
+  --elevated-card: #121e22;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(57, 255, 20, 0.2);
+  --text: #ffffff;
+  --text-muted: #8ea1a7;
+  --accent: #39FF14;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-sans), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom premium text selection */
+::selection {
+  background: rgba(57, 255, 20, 0.25);
+  color: var(--text);
+}
+
+/* Studio layout containers */
+.snap-container {
+  overflow-y: auto;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-section {
+  width: 100%;
+  position: relative;
+  min-height: auto;
+}
+
+@media (min-width: 1024px) {
+  .snap-container {
+    scroll-snap-type: y mandatory;
+    height: 100vh;
+  }
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+/* Hides scrollbars for a clean studio experience */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Premium gradient overlay for visual depth */
+.exhibition-gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(3, 13, 16, 0.2) 0%,
+    rgba(3, 13, 16, 0.85) 100%
+  );
+}
+
+* {
+  box-sizing: border-box;
+}
