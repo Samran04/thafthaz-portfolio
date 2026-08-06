@@ -128,48 +128,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. FEATURED SERVICES */}
-      <ServicesSection services={services} />
-
-      {/* 3. ABOUT PREVIEW SECTION */}
-      <section className="relative px-6 py-20 md:py-28 bg-[#071114]">
-        <div className="max-w-6xl mx-auto grid gap-10 lg:grid-cols-12 items-center">
-          <div className="lg:col-span-8 space-y-6">
-            <p className="text-xs uppercase tracking-[0.35em] text-[#39FF14] font-semibold flex items-center gap-2">
-              <User size={14} /> Creative Philosophy
-            </p>
-            <h2 className="font-display text-3xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
-              Design Shaped by Space & Rhythm
-            </h2>
-            <p className="text-sm sm:text-base text-[#8ea1a7] leading-relaxed">
-              {about.biography}
-            </p>
-            <div className="pt-2">
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-[#39FF14] hover:underline"
-              >
-                Read Full Story & Education Timeline <ArrowRight size={13} />
-              </Link>
-            </div>
-          </div>
-
-          <div className="lg:col-span-4 rounded-[2rem] border border-white/10 bg-[#0b1417] p-6 space-y-4 shadow-xl">
-            <h3 className="text-xs uppercase tracking-[0.2em] font-semibold text-[#39FF14]">Quick Highlights</h3>
-            <ul className="space-y-3 text-xs text-[#8ea1a7]">
-              <li className="flex items-center gap-2">• <span><strong>Degree:</strong> B.Sc. Visual Communication</span></li>
-              <li className="flex items-center gap-2">• <span><strong>Location:</strong> Mangalore, Karnataka</span></li>
-              <li className="flex items-center gap-2">• <span><strong>Focus:</strong> Brand Identity & Video Editing</span></li>
-            </ul>
-            <Link
-              href="/timeline"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 py-2.5 text-[10px] uppercase tracking-[0.2em] text-white hover:border-[#39FF14]/40 transition"
-            >
-              View Full Qualifications
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* 4. FEATURED SHOWREEL */}
       {featuredShowreel && (
