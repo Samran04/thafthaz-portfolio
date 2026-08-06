@@ -3,27 +3,33 @@
 import { Showreel } from '@/types/cms';
 import { VideoPlayer } from '@/components/video-player';
 import { motion } from 'framer-motion';
-import { Film, Play } from 'lucide-react';
+import { Film } from 'lucide-react';
 
 interface FeaturedShowreelProps {
   showreel: Showreel;
 }
 
 export function FeaturedShowreel({ showreel }: FeaturedShowreelProps) {
-  return (
-    <section className="relative flex flex-col justify-between items-center px-6 py-20 md:py-28 bg-[#030d10] w-full">
-      {/* Subtle Background Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(57,255,20,0.03),transparent_50%)] pointer-events-none" />
+  const isPortrait = showreel.aspectRatio === '9:16' || showreel.aspectRatio === '3:4';
 
-      {/* Main Showreel Frame */}
+  return (
+    <section className="relative flex flex-col justify-between items-center px-4 sm:px-6 py-16 md:py-24 bg-[#030d10] w-full">
+      {/* Subtle Ambient Background Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(57,255,20,0.03),transparent_60%)] pointer-events-none" />
+
+      {/* Main Showreel Frame - Dynamically Sized for 9:16 Portrait vs 16:9 Landscape */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.98, y: 25, filter: 'blur(8px)' }}
+        initial={{ opacity: 0, scale: 0.98, y: 20, filter: 'blur(8px)' }}
         whileInView={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-        viewport={{ once: false, amount: 0.2 }}
-        transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-        className="flex-1 flex flex-col items-center justify-center w-full max-w-5xl"
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className={`w-full mx-auto ${
+          isPortrait
+            ? 'max-w-[320px] sm:max-w-[380px] md:max-w-[420px]'
+            : 'max-w-5xl'
+        }`}
       >
-        <div className="w-full">
+        <div className="w-full shadow-2xl shadow-black">
           <VideoPlayer
             src={showreel.videoUrl}
             poster={showreel.thumbnailUrl}
@@ -38,12 +44,12 @@ export function FeaturedShowreel({ showreel }: FeaturedShowreelProps) {
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
         className="mt-6 md:mt-8 text-center space-y-1.5 relative z-10"
       >
-        <p className="text-[10px] uppercase tracking-[0.25em] text-[#39FF14]/80 flex items-center justify-center gap-1.5">
-          <Film size={12} /> Featured Showreel <span className="text-white/20">•</span> {showreel.duration}
+        <p className="text-[10px] uppercase tracking-[0.25em] text-[#39FF14] font-semibold flex items-center justify-center gap-1.5">
+          <Film size={12} /> {isPortrait ? 'Vertical Reel Showcase' : 'Master Cinema Showreel'} <span className="text-white/20">•</span> {showreel.duration}
         </p>
         <h2 className="font-display text-xl sm:text-2xl font-semibold text-white tracking-tight leading-tight">
           {showreel.title}
