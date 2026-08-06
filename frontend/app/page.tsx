@@ -10,6 +10,7 @@ import { HeroSettings, AboutSettings, Project, Showreel, Service, SocialLink } f
 import { ExhibitionMedia } from '@/components/exhibition-media';
 import { FeaturedShowreel } from '@/components/featured-showreel';
 import { ServicesSection } from '@/components/services-section';
+import { ReelsShowcase } from '@/components/reels-showcase';
 
 export default function HomePage() {
   const [hero, setHero] = useState<HeroSettings | null>(null);
@@ -179,52 +180,8 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* 5. SELECTED WORK PREVIEW */}
-      <section className="py-20 md:py-28 px-6 bg-[#040f12]">
-        <div className="max-w-6xl mx-auto space-y-12">
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-[0.35em] text-[#39FF14] font-semibold">Selected Portfolio</p>
-              <h2 className="font-display text-3xl sm:text-5xl font-semibold text-white tracking-tight">
-                Featured Projects
-              </h2>
-            </div>
-            <Link
-              href="/work"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white hover:border-[#39FF14]/40 transition"
-            >
-              Explore Full Archive <ArrowRight size={14} className="text-[#39FF14]" />
-            </Link>
-          </div>
-
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredProjects.map((project) => (
-              <Link
-                key={project.slug}
-                href={`/work/${project.slug}`}
-                className="group flex flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0b1417] transition hover:border-[#39FF14]/40 shadow-xl"
-              >
-                <div className="relative aspect-[16/11] overflow-hidden bg-[#071114]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={project.thumbnail}
-                    alt={project.title}
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6 space-y-2">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#39FF14]">
-                    {project.category}
-                  </span>
-                  <h3 className="text-lg font-semibold text-white group-hover:text-[#39FF14] transition">
-                    {project.title}
-                  </h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* 5. TIKTOK / INSTAGRAM REELS SHOWCASE */}
+      <ReelsShowcase projects={featuredProjects} />
 
       {/* 6. FINAL STUDIO CTA */}
       <section className="py-24 px-6 text-center bg-[#030d10]">

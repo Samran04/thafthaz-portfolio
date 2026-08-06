@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw, Volume1 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AspectRatio } from '@/types/cms';
 
@@ -27,18 +27,23 @@ export function VideoPlayer({
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState('0:00');
   const [duration, setDuration] = useState('0:00');
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [hasStartedPlaying, setHasStartedPlaying] = useState(false);
 
-  const hideControlsTimeout = useRef<NodeJS.Timeout | null>(null);
+  const isEmbed = src?.includes('drive.google.com') || src?.includes('youtube.com') || src?.includes('vimeo.com');
 
-  // Format seconds to mm:ss
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+    }
+  }, [src]);
+
   const formatTime = (timeInSeconds: number) => {
     if (isNaN(timeInSeconds)) return '0:00';
     const minutes = Math.floor(timeInSeconds / 60);
@@ -54,11 +59,11 @@ export function VideoPlayer({
     } else {
       videoRef.current.play();
       setIsPlaying(true);
-      setHasStartedPlaying(true);
     }
   };
 
-  const toggleMute = () => {
+  const toggleMute = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     if (!videoRef.current) return;
     videoRef.current.muted = !isMuted;
     setIsMuted(!isMuted);
@@ -97,56 +102,6 @@ export function VideoPlayer({
     }
   };
 
-  const handleMouseEnter = () => {
-    setShowControls(true);
-    if (autoPlayHover && videoRef.current && !isPlaying) {
-      videoRef.current.muted = true;
-      setIsMuted(true);
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-        setHasStartedPlaying(true);
-      }).catch(() => {});
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (autoPlayHover && videoRef.current && isPlaying && !hasStartedPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    }
-  };
-
-  const handleMouseMove = () => {
-    setShowControls(true);
-    if (hideControlsTimeout.current) clearTimeout(hideControlsTimeout.current);
-    hideControlsTimeout.current = setTimeout(() => {
-      if (isPlaying) setShowControls(false);
-    }, 2500);
-  };
-
-  // Keyboard shortcut listener
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') return;
-      if (!containerRef.current?.contains(document.activeElement) && !isFullscreen) return;
-
-      if (e.key === ' ' || e.key === 'k') {
-        e.preventDefault();
-        togglePlay();
-      } else if (e.key === 'm') {
-        e.preventDefault();
-        toggleMute();
-      } else if (e.key === 'f') {
-        e.preventDefault();
-        toggleFullscreen();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isPlaying, isMuted, isFullscreen]);
-
-  // Aspect ratio helper class
   const aspectClasses = {
     '16:9': 'aspect-[16/9]',
     '9:16': 'aspect-[9/16]',
@@ -156,30 +111,53 @@ export function VideoPlayer({
     '4:3': 'aspect-[4/3]',
   }[aspectRatio] || 'aspect-[16/9]';
 
+  if (isEmbed) {
+    return (
+      <div
+        ref={containerRef}
+        className={`group relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#071114] shadow-2xl ${aspectClasses} ${className}`}
+      >
+        <iframe
+          src={`${src}?autoplay=1&muted=1`}
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+          className="h-full w-full border-none object-cover"
+          title={title || 'Showreel Video'}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       ref={containerRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onMouseMove={handleMouseMove}
       className={`group relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#071114] shadow-2xl ${aspectClasses} ${className}`}
     >
-      {/* HTML5 Video */}
       <video
         ref={videoRef}
         src={src}
         poster={poster}
+        autoPlay
         loop={loop}
         playsInline
         muted={isMuted}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => setIsPlaying(false)}
-        className="h-full w-full object-cover transition duration-300"
+        className="h-full w-full object-cover transition duration-300 cursor-pointer"
         onClick={togglePlay}
       />
 
-      {/* Poster overlay overlay play button when not playing */}
+      {/* Floating Unmute Badge overlay when muted */}
+      {isMuted && (
+        <button
+          onClick={toggleMute}
+          className="absolute top-4 right-4 z-30 flex items-center gap-2 rounded-full border border-[#39FF14]/40 bg-[#0b1417]/85 px-4 py-2 text-xs uppercase tracking-[0.2em] font-semibold text-[#39FF14] shadow-2xl backdrop-blur-md transition hover:bg-[#39FF14] hover:text-black animate-pulse"
+        >
+          <VolumeX size={14} /> Click to Unmute Sound
+        </button>
+      )}
+
       {!isPlaying && (
         <div
           onClick={togglePlay}
@@ -195,14 +173,12 @@ export function VideoPlayer({
         </div>
       )}
 
-      {/* Top Title Overlay */}
       {title && (
         <div className={`absolute top-0 left-0 right-0 p-4 bg-gradient-to-b from-black/80 to-transparent transition duration-300 pointer-events-none ${showControls || !isPlaying ? 'opacity-100' : 'opacity-0'}`}>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/90">{title}</p>
         </div>
       )}
 
-      {/* Bottom Controls Bar */}
       <AnimatePresence>
         {(showControls || !isPlaying) && (
           <motion.div
@@ -212,7 +188,6 @@ export function VideoPlayer({
             transition={{ duration: 0.2 }}
             className="absolute bottom-0 left-0 right-0 flex flex-col gap-2 p-4 bg-gradient-to-t from-[#030d10] via-[#030d10]/90 to-transparent"
           >
-            {/* Progress Slider Bar */}
             <div className="relative flex items-center w-full group/slider">
               <input
                 type="range"
@@ -224,7 +199,6 @@ export function VideoPlayer({
               />
             </div>
 
-            {/* Controls Row */}
             <div className="flex items-center justify-between pt-1">
               <div className="flex items-center gap-3">
                 <button
