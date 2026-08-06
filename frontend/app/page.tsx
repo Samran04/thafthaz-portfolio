@@ -142,7 +142,7 @@ export default function HomePage() {
       <ReelsShowcase projects={featuredProjects} />
 
       {/* 6. FINAL STUDIO CTA */}
-      <section className="py-24 px-6 text-center bg-[#030d10]">
+      <section id="contact-cta" className="h-screen w-full snap-start snap-always flex flex-col justify-center items-center py-24 px-6 text-center bg-[#030d10] relative">
         <div className="max-w-3xl mx-auto space-y-8">
           <h2 className="font-display text-4xl sm:text-6xl font-semibold text-white tracking-tight leading-tight">
             Let’s create visual identities people remember.
