@@ -44,58 +44,64 @@ export function ServicesSection({ services }: ServicesSectionProps) {
         </motion.div>
 
         {/* Services Cards Grid */}
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: false, amount: 0.2 }}
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: { staggerChildren: 0.1 },
-            },
-          }}
-          className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {services.map((service, index) => {
-            const IconComponent = iconMap[service.icon] || Video;
+        {services.length === 0 ? (
+          <div className="py-12 text-center text-xs text-[#8ea1a7] rounded-2xl border border-white/5 bg-[#0b1417] p-6">
+            No services added in database yet. Add services via Admin Panel.
+          </div>
+        ) : (
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: false, amount: 0.2 }}
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: { staggerChildren: 0.1 },
+              },
+            }}
+            className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {services.map((service, index) => {
+              const IconComponent = iconMap[service.icon] || Video;
 
-            return (
-              <motion.div
-                key={service.id}
-                variants={{
-                  hidden: { opacity: 0, y: 25, filter: 'blur(6px)' },
-                  show: { opacity: 1, y: 0, filter: 'blur(0px)' },
-                }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative flex flex-col justify-between rounded-[2rem] border border-white/10 bg-[#0b1417]/80 p-6 sm:p-7 backdrop-blur-xl transition duration-500 hover:border-[#39FF14]/40 hover:bg-[#0b1417] hover:shadow-2xl hover:shadow-black/60"
-              >
-                {/* Top Icon & Order Pill */}
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#39FF14]/20 bg-[#39FF14]/5 text-[#39FF14] transition duration-500 group-hover:scale-110 group-hover:border-[#39FF14]/40 group-hover:bg-[#39FF14]/15">
-                      <IconComponent size={22} />
+              return (
+                <motion.div
+                  key={service.id}
+                  variants={{
+                    hidden: { opacity: 0, y: 25, filter: 'blur(6px)' },
+                    show: { opacity: 1, y: 0, filter: 'blur(0px)' },
+                  }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="group relative flex flex-col justify-between rounded-[2rem] border border-white/10 bg-[#0b1417]/80 p-6 sm:p-7 backdrop-blur-xl transition duration-500 hover:border-[#39FF14]/40 hover:bg-[#0b1417] hover:shadow-2xl hover:shadow-black/60"
+                >
+                  {/* Top Icon & Order Pill */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#39FF14]/20 bg-[#39FF14]/5 text-[#39FF14] transition duration-500 group-hover:scale-110 group-hover:border-[#39FF14]/40 group-hover:bg-[#39FF14]/15">
+                        <IconComponent size={22} />
+                      </div>
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/30 group-hover:text-[#39FF14]/60 transition">
+                        0{index + 1}
+                      </span>
                     </div>
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/30 group-hover:text-[#39FF14]/60 transition">
-                      0{index + 1}
-                    </span>
+
+                    {/* Title & Description */}
+                    <div className="space-y-2">
+                      <h3 className="font-display text-lg font-semibold text-white tracking-tight leading-snug group-hover:text-white transition">
+                        {service.title}
+                      </h3>
+                      <p className="text-xs text-[#8ea1a7] leading-relaxed group-hover:text-white/70 transition">
+                        {service.description}
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Title & Description */}
-                  <div className="space-y-2">
-                    <h3 className="font-display text-lg font-semibold text-white tracking-tight leading-snug group-hover:text-white transition">
-                      {service.title}
-                    </h3>
-                    <p className="text-xs text-[#8ea1a7] leading-relaxed group-hover:text-white/70 transition">
-                      {service.description}
-                    </p>
-                  </div>
-                </div>
-
-              </motion.div>
-            );
-          })}
-        </motion.div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        )}
       </div>
 
       {/* Bottom indicator */}

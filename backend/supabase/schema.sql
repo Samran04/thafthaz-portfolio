@@ -1,4 +1,272 @@
--- PostgreSQL Database Schema for Thafthaz Dynamic Portfolio & CMS
+You are now acting as a Senior Product Designer, Senior Frontend Architect, UX Designer, QA Engineer, and Responsive Design Specialist.
+
+Your task is NOT to continue adding features.
+
+Your task is to stop feature development and perform a complete UX, UI, architecture, responsiveness, accessibility, and layout audit of the entire portfolio.
+
+Treat the current implementation as Version 1.
+
+Your responsibility is to evolve it into a polished production-quality portfolio.
+
+====================================================
+
+FIRST
+
+Perform a complete diagnosis.
+
+Inspect the entire codebase.
+
+Identify every issue affecting
+
+• Information Architecture
+• UX
+• UI
+• Responsive Design
+• Mobile Experience
+• Desktop Experience
+• Navigation
+• Typography
+• Visual Hierarchy
+• Spacing
+• Grid System
+• Accessibility
+• Consistency
+• Component Reusability
+• Animation
+• Performance
+
+Do NOT immediately modify code.
+
+First determine every issue.
+
+====================================================
+
+HOMEPAGE
+
+The homepage currently contains too much information.
+
+It feels overloaded.
+
+The homepage should behave like a premium creative studio landing page.
+
+Reduce cognitive load.
+
+The homepage should only contain
+
+• Hero
+• Featured Services
+• About Preview
+• Featured Showreel
+• Selected Work Preview
+• Final CTA
+
+Move large informational sections to dedicated pages.
+
+====================================================
+
+SITE ARCHITECTURE
+
+Create a cleaner information architecture.
+
+Recommended pages:
+
+/
+
+About
+
+Services
+
+Work
+
+Showreel
+
+Contact
+
+Admin (future)
+
+Education & Career Timeline
+
+====================================================
+
+EDUCATION SECTION
+
+Remove the Education & Career Timeline from the homepage.
+
+Create a dedicated page.
+
+This page should include
+
+• Education
+• Timeline
+• Experience
+• Certifications
+• Religious Studies
+• Freelance Journey
+
+Maintain the existing design language.
+
+Do not redesign.
+
+Simply reorganize.
+
+====================================================
+
+WORK PAGE
+
+Portfolio categories should live here.
+
+The homepage should only display featured projects.
+
+The Work page should display
+
+• Posters
+
+• Branding
+
+• Motion Graphics
+
+• Photography
+
+• Commercial Campaigns
+
+• Event Coverage
+
+• Showreels
+
+Each category should eventually become dynamically powered from Supabase.
+
+====================================================
+
+NAVIGATION
+
+Redesign the navigation architecture.
+
+The navigation should feel similar to premium creative studios.
+
+Avoid a giant one-page website.
+
+Navigation should guide users naturally through the portfolio.
+
+====================================================
+
+RESPONSIVE DESIGN
+
+This is currently the weakest part of the project.
+
+The mobile experience feels like a compressed desktop layout.
+
+Redesign ONLY the mobile composition.
+
+Do NOT redesign branding.
+
+Maintain
+
+• colors
+• typography
+• animations
+• visual language
+
+while creating layouts that feel intentionally designed for phones.
+
+Increase content width.
+
+Improve spacing.
+
+Improve readability.
+
+Improve hierarchy.
+
+Remove cramped layouts.
+
+Remove inconsistent margins.
+
+Remove awkward wrapping.
+
+Improve CTA placement.
+
+Improve footer spacing.
+
+Every section should feel designed specifically for mobile.
+
+====================================================
+
+LAYOUT SYSTEM
+
+Audit
+
+Containers
+
+Padding
+
+Margins
+
+Gap
+
+Grid
+
+Breakpoints
+
+Overflow
+
+Flex layouts
+
+Alignment
+
+Component sizing
+
+Remove every visual inconsistency.
+
+====================================================
+
+DESIGN CONSISTENCY
+
+Every component should belong to one unified design system.
+
+Spacing
+
+Corner radius
+
+Buttons
+
+Cards
+
+Typography
+
+Hover states
+
+Icons
+
+Badges
+
+Animations
+
+Everything should follow the same system.
+
+====================================================
+
+PERFORMANCE
+
+Remove unnecessary rendering.
+
+Improve lazy loading.
+
+Optimize images.
+
+Optimize layout shifts.
+
+Maintain SEO.
+
+====================================================
+
+FINAL GOAL
+
+Do NOT simply make the website responsive.
+
+Transform Version 1 into a production-ready premium creative portfolio suitable for a creative director.
+
+Think like the design team at Linear, Framer, Apple, Stripe, or Awwwards-winning creative agencies.
+
+The goal is refinement, clarity, simplicity, and intentionality—not adding more features.-- PostgreSQL Database Schema for Thafthaz Dynamic Portfolio & CMS
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

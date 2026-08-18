@@ -1,27 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Video, Images, FolderKanban } from 'lucide-react';
 import { CMSDataService } from '@/lib/cms/data-service';
 import { Project, Category } from '@/types/cms';
 
-const defaultStudioCategories: Category[] = [
-  { id: 'cat-all', name: 'All Work', slug: 'all', displayOrder: 0 },
-  { id: 'cat-posters', name: 'Posters', slug: 'posters', displayOrder: 1 },
-  { id: 'cat-branding', name: 'Branding', slug: 'branding', displayOrder: 2 },
-  { id: 'cat-motion', name: 'Motion Graphics', slug: 'motion-graphics', displayOrder: 3 },
-  { id: 'cat-photo', name: 'Photography', slug: 'photography', displayOrder: 4 },
-  { id: 'cat-campaigns', name: 'Commercial Campaigns', slug: 'commercial-campaigns', displayOrder: 5 },
-  { id: 'cat-events', name: 'Event Coverage', slug: 'event-coverage', displayOrder: 6 },
-  { id: 'cat-showreels', name: 'Showreels', slug: 'showreels', displayOrder: 7 },
-];
-
 export default function WorkPage() {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [categories, setCategories] = useState<Category[]>(defaultStudioCategories);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -32,9 +20,8 @@ export default function WorkPage() {
           CMSDataService.getCategories(),
           CMSDataService.getProjects(),
         ]);
-        if (cats && cats.length > 0) {
-          setCategories(cats);
-        }
+        const allCategory: Category = { id: 'all', name: 'All Work', slug: 'all', displayOrder: 0 };
+        setCategories([allCategory, ...cats]);
         setProjects(projs);
       } catch (err) {
         console.error('Failed to load archive projects', err);
@@ -50,7 +37,7 @@ export default function WorkPage() {
     ? projects
     : projects.filter((p) => {
         const catSlug = p.category.toLowerCase().replace(/\s+/g, '-');
-        const typeSlug = p.projectType.toLowerCase().replace(/\s+/g, '-');
+        const typeSlug = p.projectType ? p.projectType.toLowerCase().replace(/\s+/g, '-') : '';
         return catSlug.includes(activeCategory) || typeSlug.includes(activeCategory) || activeCategory.includes(catSlug);
       });
 
@@ -81,26 +68,32 @@ export default function WorkPage() {
         </div>
 
         {/* Category Filter Tabs */}
-        <div className="flex flex-wrap gap-2 pb-2">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.slug)}
-              className={`rounded-full px-4 py-2 text-xs uppercase tracking-[0.2em] font-medium transition ${
-                activeCategory === cat.slug
-                  ? 'border border-[#39FF14]/40 bg-[#39FF14]/15 text-[#39FF14]'
-                  : 'border border-white/5 bg-[#0b1417]/50 text-[#8ea1a7] hover:border-white/20 hover:text-white'
-              }`}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
+        {categories.length > 1 && (
+          <div className="flex flex-wrap gap-2 pb-2">
+            {categories.map((cat) => (
+              <button
+                key={cat.id || cat.slug}
+                onClick={() => setActiveCategory(cat.slug)}
+                className={`rounded-full px-4 py-2 text-xs uppercase tracking-[0.2em] font-medium transition ${
+                  activeCategory === cat.slug
+                    ? 'border border-[#39FF14]/40 bg-[#39FF14]/15 text-[#39FF14]'
+                    : 'border border-white/5 bg-[#0b1417]/50 text-[#8ea1a7] hover:border-white/20 hover:text-white'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Loading Indicator */}
         {isLoading ? (
           <div className="flex py-20 justify-center text-xs uppercase tracking-[0.25em] text-[#8ea1a7]">
             Loading Work Archive...
+          </div>
+        ) : filteredProjects.length === 0 ? (
+          <div className="py-20 text-center text-xs uppercase tracking-[0.25em] text-[#8ea1a7] rounded-3xl border border-white/5 bg-[#0b1417] p-8">
+            No projects found in database. Add new projects via Admin Panel.
           </div>
         ) : (
           /* Projects Grid */
@@ -119,11 +112,11 @@ export default function WorkPage() {
             className="grid gap-8 sm:grid-cols-2"
           >
             {filteredProjects.map((project) => {
-              const hasVideo = Boolean(project.videoUrl || project.media.some((m) => m.mediaType === 'video'));
+              const hasVideo = Boolean(project.videoUrl || (project.media && project.media.some((m) => m.mediaType === 'video')));
 
               return (
                 <motion.div
-                  key={project.slug}
+                  key={project.id || project.slug}
                   variants={{
                     hidden: { opacity: 0, y: 20, filter: 'blur(5px)' },
                     show: { opacity: 1, y: 0, filter: 'blur(0px)' },
@@ -136,12 +129,14 @@ export default function WorkPage() {
                   >
                     {/* Image Box */}
                     <div className="relative aspect-[16/11] overflow-hidden bg-[#071114]">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={project.thumbnail}
-                        alt={project.title}
-                        className="h-full w-full object-cover transition duration-[700ms] ease-out group-hover:scale-[1.03]"
-                      />
+                      {project.thumbnail && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={project.thumbnail}
+                          alt={project.title}
+                          className="h-full w-full object-cover transition duration-[700ms] ease-out group-hover:scale-[1.03]"
+                        />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-[#030d10] via-transparent to-transparent opacity-70" />
 
                       {/* Badges */}

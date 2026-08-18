@@ -100,31 +100,33 @@ export default function HomePage() {
           </motion.div>
 
           {/* Profile Image Card */}
-          <div className="relative justify-self-center lg:justify-self-end w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px]">
-            <div className="absolute -inset-4 bg-[radial-gradient(circle_at_center,rgba(57,255,20,0.08),transparent_55%)] blur-2xl pointer-events-none rounded-[3rem]" />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15, filter: 'blur(8px)' }}
-              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: [0, -6, 0] }}
-              transition={{
-                opacity: { duration: 0.7, delay: 0.1, ease: 'easeOut' },
-                scale: { duration: 0.7, delay: 0.1, ease: 'easeOut' },
-                filter: { duration: 0.7, delay: 0.1, ease: 'easeOut' },
-                y: { duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 },
-              }}
-              className="relative w-full aspect-[3/4] overflow-hidden rounded-[2rem] border border-[#39FF14]/15 bg-[#0b1417] p-1.5 shadow-2xl shadow-black/80 backdrop-blur-xl sm:p-2"
-            >
-              <div className="relative h-full w-full overflow-hidden rounded-[1.4rem] bg-[#071114]">
-                <Image
-                  src={hero.profileImageUrl}
-                  alt={`Portrait of ${hero.name}`}
-                  fill
-                  sizes="(max-width: 768px) 280px, 360px"
-                  className="scale-[1.04] object-cover object-[center_20%] brightness-[1.04] contrast-[1.08]"
-                  priority
-                />
-              </div>
-            </motion.div>
-          </div>
+          {hero.profileImageUrl ? (
+            <div className="relative justify-self-center lg:justify-self-end w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px]">
+              <div className="absolute -inset-4 bg-[radial-gradient(circle_at_center,rgba(57,255,20,0.08),transparent_55%)] blur-2xl pointer-events-none rounded-[3rem]" />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 15, filter: 'blur(8px)' }}
+                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: [0, -6, 0] }}
+                transition={{
+                  opacity: { duration: 0.7, delay: 0.1, ease: 'easeOut' },
+                  scale: { duration: 0.7, delay: 0.1, ease: 'easeOut' },
+                  filter: { duration: 0.7, delay: 0.1, ease: 'easeOut' },
+                  y: { duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 },
+                }}
+                className="relative w-full aspect-[3/4] overflow-hidden rounded-[2rem] border border-[#39FF14]/15 bg-[#0b1417] p-1.5 shadow-2xl shadow-black/80 backdrop-blur-xl sm:p-2"
+              >
+                <div className="relative h-full w-full overflow-hidden rounded-[1.4rem] bg-[#071114]">
+                  <Image
+                    src={hero.profileImageUrl}
+                    alt={`Portrait of ${hero.name || 'Designer'}`}
+                    fill
+                    sizes="(max-width: 768px) 280px, 360px"
+                    className="scale-[1.04] object-cover object-[center_20%] brightness-[1.04] contrast-[1.08]"
+                    priority
+                  />
+                </div>
+              </motion.div>
+            </div>
+          ) : null}
         </div>
       </section>
 

@@ -2,8 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Play, Volume2, VolumeX, Smartphone, ArrowRight, Heart, ChevronDown, ChevronUp, Mail } from 'lucide-react';
+import { Volume2, VolumeX, Smartphone, ArrowRight, Heart, ChevronDown, ChevronUp } from 'lucide-react';
 import { Project } from '@/types/cms';
 import { formatMediaUrl, extractGoogleDriveId } from '@/lib/cms/google-drive';
 
@@ -11,15 +10,32 @@ interface ReelsShowcaseProps {
   projects: Project[];
 }
 
-const fallbackPosters = [
-  '/assets/featured-projects/St_Aloysius_2.jpg',
-  '/assets/featured-projects/Artha_Capital_1.jpg',
-  '/assets/posters/Typography_Minimal_1.jpg',
-  '/assets/featured-projects/Travel_Pack_6.jpg',
-];
-
 export function ReelsShowcase({ projects }: ReelsShowcaseProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  if (!projects || projects.length === 0) {
+    return (
+      <section className="relative w-full h-[60vh] bg-[#030d10] text-white flex flex-col items-center justify-center p-6 text-center">
+        <div className="max-w-md space-y-4 rounded-3xl border border-white/10 bg-[#0b1417] p-8 shadow-2xl">
+          <div className="h-12 w-12 rounded-full border border-[#39FF14]/40 bg-[#39FF14]/10 flex items-center justify-center text-[#39FF14] mx-auto">
+            <Smartphone size={24} />
+          </div>
+          <h2 className="font-display text-2xl font-semibold text-white">Portfolio Exhibition Ready</h2>
+          <p className="text-xs text-[#8ea1a7] leading-relaxed">
+            Your portfolio database is clean swept and ready! Log into your Admin Panel to add your client’s first project bundle.
+          </p>
+          <div className="pt-2">
+            <Link
+              href="/admin/projects"
+              className="inline-flex items-center gap-2 rounded-full border border-[#39FF14] bg-[#39FF14] px-6 py-3 text-xs uppercase tracking-[0.2em] font-semibold text-black hover:bg-[#39FF14]/90 transition"
+            >
+              Open Admin Panel <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const scrollNext = () => {
     if (containerRef.current) {
@@ -80,7 +96,6 @@ export function ReelsShowcase({ projects }: ReelsShowcaseProps) {
             project={project}
             index={idx}
             isLast={idx === projects.length - 1}
-            fallbackImg={fallbackPosters[idx % fallbackPosters.length]}
             onScrollToContact={scrollToContact}
           />
         ))}
@@ -93,13 +108,11 @@ function FullReelSlide({
   project,
   index,
   isLast,
-  fallbackImg,
   onScrollToContact,
 }: {
   project: Project;
   index: number;
   isLast: boolean;
-  fallbackImg: string;
   onScrollToContact: () => void;
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -114,7 +127,7 @@ function FullReelSlide({
   const driveId = extractGoogleDriveId(project.videoUrl || '');
   const isDriveEmbed = Boolean(driveId || project.videoUrl?.includes('drive.google.com') || project.videoUrl?.includes('youtube.com'));
 
-  const displayImage = imgError ? fallbackImg : formattedImage || fallbackImg;
+  const displayImage = formattedImage || '';
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -157,13 +170,15 @@ function FullReelSlide({
             title={project.title}
           />
         ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={displayImage}
-            alt={project.title}
-            onError={() => setImgError(true)}
-            className="h-full w-full object-cover"
-          />
+          displayImage && !imgError && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={displayImage}
+              alt={project.title}
+              onError={() => setImgError(true)}
+              className="h-full w-full object-cover"
+            />
+          )
         )}
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90 pointer-events-none" />
