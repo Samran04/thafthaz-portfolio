@@ -1,0 +1,18 @@
+name: Supabase Keep-Alive Automation
+
+on:
+  schedule:
+    # Runs every 3 days at midnight UTC to prevent Supabase 7-day auto-pause
+    - cron: '0 0 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping-supabase:
+    name: Keep Supabase Active
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase Database REST API
+        run: |
+          curl -i -X GET "https://vrpndgpwabtgzuzudcwu.supabase.co/rest/v1/hero_settings?select=id&limit=1" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZycG5kZ3B3YWJ0Z3p1enVkY3d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU5NDc4MjYsImV4cCI6MjEwMTUyMzgyNn0.vAfTZAuexHwPsxUJ5quvDz9zf2NuhAsrJFbOk3buDD0" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZycG5kZ3B3YWJ0Z3p1enVkY3d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU5NDc4MjYsImV4cCI6MjEwMTUyMzgyNn0.vAfTZAuexHwPsxUJ5quvDz9zf2NuhAsrJFbOk3buDD0"
