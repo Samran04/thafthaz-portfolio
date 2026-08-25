@@ -13,19 +13,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/work`,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 0.9,
-    },
-    ...projectUrls,
-  ];
+  const staticPages = [
+    '',
+    '/about',
+    '/work',
+    '/services',
+    '/showreel',
+    '/contact',
+    '/timeline',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: route === '' ? 1.0 : 0.9,
+  }));
+
+  return [...staticPages, ...projectUrls];
 }
+
