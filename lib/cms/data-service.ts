@@ -3,24 +3,24 @@ import { getSupabaseBrowserClient } from '@/lib/supabase/client';
 
 export const INITIAL_CMS_DATA: CMSData = {
   hero: {
-    name: '',
-    title: '',
-    headline: '',
-    description: '',
+    name: 'Thafthaz',
+    title: 'Video Editor • Graphic Designer',
+    headline: 'Crafting visual stories\nthat leave an impression.',
+    description: 'Immersive digital experiences shaped through editorial movement, layout rhythm, and spatial restraint.',
     ctaText: 'Enter Exhibition',
     ctaLink: '/work',
-    profileImageUrl: '',
-    resumeUrl: '',
+    profileImageUrl: '/assets/profile/profile.jpeg',
+    resumeUrl: '/resume.pdf',
   },
 
   about: {
-    biography: '',
-    tagline: '',
-    subline: '',
-    email: '',
-    phone: '',
-    location: '',
-    availability: '',
+    biography: 'Visual Director, Motion Designer & Graphic Artist based in Mangalore, KA. Specializing in commercial video editing, brand identity design, and high-impact digital campaigns.',
+    tagline: "Let's create visual identities people remember.",
+    subline: 'Collaborating on visual identities, cinematic editing sequences, and layouts that leave a lasting imprint.',
+    email: 'hello@thafthaz.com',
+    phone: '+91 82773 89481',
+    location: 'Mangalore, KA',
+    availability: 'Available for Select Commissions',
   },
 
   categories: [],
@@ -48,14 +48,14 @@ export class CMSDataService {
       if (error || !data) return INITIAL_CMS_DATA.hero;
 
       return {
-        name: data.name || '',
-        title: data.title || '',
-        headline: data.headline || '',
-        description: data.description || '',
-        ctaText: data.cta_text || 'Enter Exhibition',
-        ctaLink: data.cta_link || '/work',
-        profileImageUrl: data.profile_image_url || '',
-        resumeUrl: data.resume_url || '',
+        name: data.name || INITIAL_CMS_DATA.hero.name,
+        title: data.title || INITIAL_CMS_DATA.hero.title,
+        headline: data.headline || INITIAL_CMS_DATA.hero.headline,
+        description: data.description || INITIAL_CMS_DATA.hero.description,
+        ctaText: data.cta_text || INITIAL_CMS_DATA.hero.ctaText,
+        ctaLink: data.cta_link || INITIAL_CMS_DATA.hero.ctaLink,
+        profileImageUrl: data.profile_image_url || INITIAL_CMS_DATA.hero.profileImageUrl,
+        resumeUrl: data.resume_url || INITIAL_CMS_DATA.hero.resumeUrl,
       };
     } catch {
       return INITIAL_CMS_DATA.hero;
@@ -72,13 +72,13 @@ export class CMSDataService {
       if (error || !data) return INITIAL_CMS_DATA.about;
 
       return {
-        biography: data.biography || '',
-        tagline: data.tagline || '',
-        subline: data.subline || '',
-        email: data.email || '',
-        phone: data.phone || '',
-        location: data.location || '',
-        availability: data.availability || '',
+        biography: data.biography || INITIAL_CMS_DATA.about.biography,
+        tagline: data.tagline || INITIAL_CMS_DATA.about.tagline,
+        subline: data.subline || INITIAL_CMS_DATA.about.subline,
+        email: data.email || INITIAL_CMS_DATA.about.email,
+        phone: data.phone || INITIAL_CMS_DATA.about.phone,
+        location: data.location || INITIAL_CMS_DATA.about.location,
+        availability: data.availability || INITIAL_CMS_DATA.about.availability,
       };
     } catch {
       return INITIAL_CMS_DATA.about;
