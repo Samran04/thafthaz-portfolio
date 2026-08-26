@@ -20,8 +20,9 @@ export default function WorkPage() {
           CMSDataService.getCategories(),
           CMSDataService.getProjects(),
         ]);
+        const filteredCats = cats.filter((c) => c.slug !== 'all');
         const allCategory: Category = { id: 'all', name: 'All Work', slug: 'all', displayOrder: 0 };
-        setCategories([allCategory, ...cats]);
+        setCategories([allCategory, ...filteredCats]);
         setProjects(projs);
       } catch (err) {
         console.error('Failed to load archive projects', err);

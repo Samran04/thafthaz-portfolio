@@ -327,6 +327,7 @@ export default function AdminProjectsPage() {
                         <option value="Motion Graphics">Motion Graphics</option>
                         <option value="Poster Series">Poster Series</option>
                         <option value="Social Reels">Social Reels</option>
+                        <option value="Photo Editing">Photo Editing</option>
                       </select>
                     </div>
 

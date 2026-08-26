@@ -7,7 +7,6 @@ import { LayoutDashboard, Film, FolderKanban, User, Sparkles, MessageSquare, Ext
 const adminNavItems = [
   { href: '/admin', label: 'Overview', icon: LayoutDashboard },
   { href: '/admin/projects', label: 'Projects & Videos', icon: FolderKanban },
-  { href: '/admin/showreels', label: 'Showreels', icon: Film },
   { href: '/admin/hero-about', label: 'Hero & About', icon: User },
   { href: '/admin/services', label: 'Services', icon: Sparkles },
   { href: '/admin/testimonials', label: 'Testimonials', icon: MessageSquare },

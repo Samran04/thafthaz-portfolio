@@ -31,7 +31,8 @@ INSERT INTO categories (name, slug, description, display_order) VALUES
 ('Video Editing', 'video-editing', 'Cinematic showreels, commercial edits, and short films', 1),
 ('Motion Graphics', 'motion-graphics', '2D & 3D motion typography and visual FX', 2),
 ('Poster Series', 'poster-series', 'Minimalist typography artwork and spatial layouts', 3),
-('Social Reels', 'social-reels', '9:16 portrait video edits engineered for high engagement', 4)
+('Social Reels', 'social-reels', '9:16 portrait video edits engineered for high engagement', 4),
+('Photo Editing', 'photo-editing', 'Professional photo editing, color correction, and retouching', 5)
 ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name, description = EXCLUDED.description;
 
 -- 4. Showreels Seed

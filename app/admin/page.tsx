@@ -9,22 +9,19 @@ import { CMSData } from '@/types/cms';
 export default function AdminOverviewPage() {
   const [data, setData] = useState<{
     projectCount: number;
-    showreelCount: number;
     serviceCount: number;
     featuredCount: number;
   } | null>(null);
 
   useEffect(() => {
     async function loadStats() {
-      const [projects, showreels, services] = await Promise.all([
+      const [projects, services] = await Promise.all([
         CMSDataService.getProjects(),
-        CMSDataService.getAllShowreels(),
         CMSDataService.getServices(),
       ]);
 
       setData({
         projectCount: projects.length,
-        showreelCount: showreels.length,
         serviceCount: services.length,
         featuredCount: projects.filter((p) => p.isFeatured).length,
       });
@@ -50,7 +47,7 @@ export default function AdminOverviewPage() {
       </div>
 
       {/* Metrics Cards Grid */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 sm:grid-cols-3 lg:grid-cols-3">
         <div className="rounded-[1.5rem] border border-white/10 bg-[#0b1417] p-6 shadow-xl space-y-3">
           <div className="flex items-center justify-between text-[#39FF14]">
             <FolderKanban size={22} />
@@ -64,23 +61,12 @@ export default function AdminOverviewPage() {
 
         <div className="rounded-[1.5rem] border border-white/10 bg-[#0b1417] p-6 shadow-xl space-y-3">
           <div className="flex items-center justify-between text-[#39FF14]">
-            <Film size={22} />
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[#8ea1a7]">Showreels</span>
-          </div>
-          <div>
-            <p className="text-3xl font-bold text-white">{data?.showreelCount ?? 0}</p>
-            <p className="text-xs text-[#8ea1a7] mt-1">Cloudinary Stream Enabled</p>
-          </div>
-        </div>
-
-        <div className="rounded-[1.5rem] border border-white/10 bg-[#0b1417] p-6 shadow-xl space-y-3">
-          <div className="flex items-center justify-between text-[#39FF14]">
             <Sparkles size={22} />
             <span className="text-[10px] uppercase tracking-[0.2em] text-[#8ea1a7]">Services</span>
           </div>
           <div>
             <p className="text-3xl font-bold text-white">{data?.serviceCount ?? 0}</p>
-            <p className="text-xs text-[#8ea1a7] mt-1">Dynamic Cards</p>
+            <p className="text-xs text-[#8ea1a7] mt-1">Dynamic Offerings</p>
           </div>
         </div>
 
@@ -90,8 +76,8 @@ export default function AdminOverviewPage() {
             <span className="text-[10px] uppercase tracking-[0.2em] text-[#8ea1a7]">Storage</span>
           </div>
           <div>
-            <p className="text-sm font-semibold text-white">Supabase & Cloudinary</p>
-            <p className="text-xs text-[#8ea1a7] mt-1">PostgreSQL URL Mode</p>
+            <p className="text-sm font-semibold text-white">Supabase & Local</p>
+            <p className="text-xs text-[#8ea1a7] mt-1">Database Connected</p>
           </div>
         </div>
       </div>
@@ -99,16 +85,16 @@ export default function AdminOverviewPage() {
       {/* Quick Action Sections */}
       <div className="grid gap-6 md:grid-cols-2">
         <div className="rounded-[2rem] border border-white/10 bg-[#0b1417] p-6 space-y-4">
-          <h2 className="text-base font-semibold text-white tracking-wide">Manage Video Showcase</h2>
+          <h2 className="text-base font-semibold text-white tracking-wide">Manage Portfolio Projects</h2>
           <p className="text-xs text-[#8ea1a7] leading-relaxed">
-            Upload new video cuts (16:9, 21:9, or 9:16 mobile reels), update Cloudinary URL streams, assign custom thumbnails, or switch the featured homepage showreel.
+            Create, update, or remove portfolio projects, assign category tags, upload posters, and set featured items for the home page.
           </p>
           <div className="pt-2">
             <Link
-              href="/admin/showreels"
+              href="/admin/projects"
               className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-[#39FF14] hover:underline"
             >
-              Open Showreel Manager <ArrowRight size={12} />
+              Open Project Manager <ArrowRight size={12} />
             </Link>
           </div>
         </div>

@@ -11,7 +11,6 @@ const navLinks = [
   { href: '/about', label: 'About', icon: User },
   { href: '/services', label: 'Services', icon: Sparkles },
   { href: '/work', label: 'Work', icon: FolderKanban },
-  { href: '/showreel', label: 'Showreel', icon: Film },
   { href: '/timeline', label: 'Timeline', icon: GraduationCap },
   { href: '/contact', label: 'Contact', icon: Mail },
 ];

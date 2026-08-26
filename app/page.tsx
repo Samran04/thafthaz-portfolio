@@ -10,7 +10,7 @@ import { HeroSettings, AboutSettings, Project, Showreel, Service, SocialLink } f
 import { ExhibitionMedia } from '@/components/exhibition-media';
 import { FeaturedShowreel } from '@/components/featured-showreel';
 import { ServicesSection } from '@/components/services-section';
-import { ReelsShowcase } from '@/components/reels-showcase';
+import { RecentWorks } from '@/components/recent-works';
 
 export default function HomePage() {
   const [hero, setHero] = useState<HeroSettings | null>(null);
@@ -27,7 +27,7 @@ export default function HomePage() {
         const [heroData, aboutData, projectsData, showreelData, servicesData, socialsData] = await Promise.all([
           CMSDataService.getHero(),
           CMSDataService.getAbout(),
-          CMSDataService.getProjects(undefined, true),
+          CMSDataService.getProjects(),
           CMSDataService.getFeaturedShowreel(),
           CMSDataService.getServices(),
           CMSDataService.getSocialLinks(),
@@ -35,7 +35,7 @@ export default function HomePage() {
 
         setHero(heroData);
         setAbout(aboutData);
-        setFeaturedProjects(projectsData.slice(0, 3));
+        setFeaturedProjects(projectsData.slice(0, 5));
         setFeaturedShowreel(showreelData);
         setServices(servicesData);
         setSocialLinks(socialsData);
@@ -63,7 +63,7 @@ export default function HomePage() {
   return (
     <main className="w-full bg-[#030d10] text-white">
       {/* 1. HERO SECTION */}
-      <section id="hero" className="relative flex flex-col justify-between px-6 py-24 sm:py-32 md:px-16">
+      <section id="hero" className="relative flex flex-col justify-between px-6 pt-24 pb-8 sm:pt-28 sm:pb-12 md:px-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(57,255,20,0.04),transparent_50%)] pointer-events-none" />
 
         <div className="relative z-10 grid gap-12 md:gap-16 lg:grid-cols-[1.2fr_0.8fr] max-w-6xl w-full mx-auto my-auto items-center">
@@ -101,47 +101,58 @@ export default function HomePage() {
 
           {/* Profile Image Card */}
           {hero.profileImageUrl ? (
-            <div className="relative justify-self-center lg:justify-self-end w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px]">
-              <div className="absolute -inset-4 bg-[radial-gradient(circle_at_center,rgba(57,255,20,0.08),transparent_55%)] blur-2xl pointer-events-none rounded-[3rem]" />
+            <div className="relative justify-self-center lg:justify-self-end w-full max-w-[320px] sm:max-w-[380px] md:max-w-[420px] group">
+              {/* Animated Radial Ambient Glow */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 15, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: [0, -6, 0] }}
-                transition={{
-                  opacity: { duration: 0.7, delay: 0.1, ease: 'easeOut' },
-                  scale: { duration: 0.7, delay: 0.1, ease: 'easeOut' },
-                  filter: { duration: 0.7, delay: 0.1, ease: 'easeOut' },
-                  y: { duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 },
+                animate={{
+                  scale: [1, 1.12, 1],
+                  opacity: [0.4, 0.8, 0.4],
                 }}
-                className="relative w-full aspect-[3/4] overflow-hidden rounded-[2rem] border border-[#39FF14]/15 bg-[#0b1417] p-1.5 shadow-2xl shadow-black/80 backdrop-blur-xl sm:p-2"
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                className="absolute -inset-4 bg-[radial-gradient(circle_at_center,rgba(57,255,20,0.12),transparent_60%)] blur-2xl pointer-events-none rounded-2xl"
+              />
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 25, filter: 'blur(12px)' }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  filter: 'blur(0px)',
+                  y: [0, -8, 0],
+                }}
+                whileHover={{
+                  scale: 1.03,
+                  rotate: 0.5,
+                  borderColor: 'rgba(57, 255, 20, 0.5)',
+                }}
+                transition={{
+                  opacity: { duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] },
+                  scale: { duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] },
+                  filter: { duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] },
+                  y: { duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.8 },
+                }}
+                className="relative w-full aspect-[3/4] overflow-hidden rounded-2xl border border-[#39FF14]/25 bg-[#0b1417] shadow-2xl shadow-black/80 backdrop-blur-xl cursor-pointer"
               >
-                <div className="relative h-full w-full overflow-hidden rounded-[1.4rem] bg-[#071114]">
-                  <Image
-                    src={hero.profileImageUrl}
-                    alt={`Portrait of ${hero.name || 'Designer'}`}
-                    fill
-                    sizes="(max-width: 768px) 280px, 360px"
-                    className="scale-[1.04] object-cover object-[center_20%] brightness-[1.04] contrast-[1.08]"
-                    priority
-                  />
-                </div>
+                <Image
+                  src={hero.profileImageUrl}
+                  alt={`Portrait of ${hero.name || 'Designer'}`}
+                  fill
+                  sizes="(max-width: 768px) 320px, 420px"
+                  className="object-cover object-[center_20%] brightness-[1.04] contrast-[1.08] transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                  priority
+                />
               </motion.div>
             </div>
           ) : null}
         </div>
       </section>
 
-
-      {/* 4. FEATURED SHOWREEL */}
-      {featuredShowreel && (
-        <section id="showreel" className="py-20 md:py-28 px-6">
-          <div className="max-w-6xl mx-auto">
-            <FeaturedShowreel showreel={featuredShowreel} />
-          </div>
-        </section>
-      )}
-
-      {/* 5. TIKTOK / INSTAGRAM REELS SHOWCASE */}
-      <ReelsShowcase projects={featuredProjects} />
+      {/* 4. RECENT WORKS SHOWCASE */}
+      <RecentWorks projects={featuredProjects} />
 
       {/* 6. FINAL STUDIO CTA */}
       <section id="contact-cta" className="h-screen w-full snap-start snap-always flex flex-col justify-center items-center py-24 px-6 text-center bg-[#030d10] relative">

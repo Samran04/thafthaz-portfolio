@@ -25,3 +25,6 @@ Thumbs.db
 # Coverage and caches
 coverage/
 .cache/
+
+# Build info
+*.tsbuildinfo
