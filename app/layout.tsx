@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Inter } from 'next/font/google';
 import { FloatingNav } from '@/components/floating-nav';
 import { SmoothScroll } from '@/components/smooth-scroll';
+import { Footer } from '@/components/footer';
 import './globals.css';
 
 const geist = Geist({
@@ -225,6 +226,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SmoothScroll />
         <FloatingNav />
         {children}
+        <Footer />
       </body>
     </html>
   );
